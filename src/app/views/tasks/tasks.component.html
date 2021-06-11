@@ -40,7 +40,7 @@
         <!--    фильтр по статусу -->
 
         <mat-form-field>
-            <mat-select #statusFilter (valueChange)="onFilterByStatus(this.$event)"
+            <mat-select #statusFilter (valueChange)="onFilterByStatus($event)"
                         [value]="selectedStatusFilter" placeholder="Фильтр по статусу">
                 <mat-option [value]="null">Все статусы</mat-option>
                 <mat-option [value]="true">Завершенные задачи</mat-option>
@@ -69,7 +69,7 @@
 
         <mat-form-field>
 
-            <mat-select (valueChange)="onFilterByPriority(this.$event)" [value]="selectedPriorityFilter"
+            <mat-select (valueChange)="onFilterByPriority($event)" [value]="selectedPriorityFilter"
                         placeholder="Фильтр по приоритетам">
                 <mat-option [value]="null">Все приоритеты</mat-option>
                 <mat-option *ngFor="let priority of priorities" [value]="priority">{{priority.title}}</mat-option>

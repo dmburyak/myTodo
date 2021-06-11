@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component';
 import {OperType} from "../OperType";
 
@@ -12,9 +12,9 @@ import {OperType} from "../OperType";
 // создание/редактирование категории
 export class EditPriorityDialogComponent implements OnInit {
 
-    private dialogTitle: string; // текст для диалогового окна
-    private priorityTitle: string; // текст для названия приоритета (при реактировании или добавлении)
-    private operType: OperType;
+    dialogTitle: string; // текст для диалогового окна
+    priorityTitle: string; // текст для названия приоритета (при реактировании или добавлении)
+    operType: OperType;
 
     constructor(
         private dialogRef: MatDialogRef<EditPriorityDialogComponent>, // // для возможности работы с текущим диалог. окном
@@ -31,17 +31,17 @@ export class EditPriorityDialogComponent implements OnInit {
     }
 
     // нажали ОК
-    private onConfirm(): void {
+    onConfirm(): void {
         this.dialogRef.close(this.priorityTitle);
     }
 
     // нажали отмену (ничего не сохраняем и закрываем окно)
-    private onCancel(): void {
+    onCancel(): void {
         this.dialogRef.close(false);
     }
 
     // нажали Удалить
-    private delete(): void {
+    delete(): void {
 
         const dialogRef = this.dialog.open(ConfirmDialogComponent, {
             maxWidth: '500px',
@@ -62,7 +62,7 @@ export class EditPriorityDialogComponent implements OnInit {
     }
 
     // можно ли удалять (для показа/скрытия кнопки)
-    private canDelete(): boolean {
+    canDelete(): boolean {
         return this.operType == OperType.EDIT;
     }
 }

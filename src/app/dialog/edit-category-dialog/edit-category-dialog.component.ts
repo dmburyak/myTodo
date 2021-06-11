@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component';
 import {OperType} from "../OperType";
 
@@ -13,9 +13,9 @@ import {OperType} from "../OperType";
 // создание/редактирование категории
 export class EditCategoryDialogComponent implements OnInit {
 
-    private dialogTitle: string; // текст для диалогового окна
-    private categoryTitle: string; // текст для названия категории (при реактировании или добавлении)
-    private operType: OperType; // тип операции
+    dialogTitle: string; // текст для диалогового окна
+    categoryTitle: string; // текст для названия категории (при реактировании или добавлении)
+    operType: OperType; // тип операции
 
     constructor(
         private dialogRef: MatDialogRef<EditCategoryDialogComponent>, // для работы с текущим диалог. окном
@@ -34,17 +34,17 @@ export class EditCategoryDialogComponent implements OnInit {
     }
 
     // нажали ОК
-    private onConfirm(): void {
+    onConfirm(): void {
         this.dialogRef.close(this.categoryTitle);
     }
 
     // нажали отмену (ничего не сохраняем и закрываем окно)
-    private onCancel(): void {
+    onCancel(): void {
         this.dialogRef.close(false);
     }
 
     // нажали Удалить
-    private delete(): void {
+    delete(): void {
 
         const dialogRef = this.dialog.open(ConfirmDialogComponent, {
             maxWidth: '500px',
@@ -65,7 +65,7 @@ export class EditCategoryDialogComponent implements OnInit {
     }
 
     // можно ли удалять (для показа/скрытия кнопки)
-    private canDelete(): boolean {
+    canDelete(): boolean {
         return this.operType === OperType.EDIT;
     }
 }
