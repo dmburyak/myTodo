@@ -1,12 +1,12 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
-import {Task} from '../../model/Task';
-import {Priority} from '../../model/Priority';
-import {Category} from '../../model/Category';
-import {DataHandlerService} from '../../service/data-handler.service';
-import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component';
-import {OperType} from "../OperType";
-import {DeviceDetectorService} from "ngx-device-detector";
+import { Component, Inject, OnInit } from '@angular/core';
+import { Task } from '../../model/Task';
+import { Priority } from '../../model/Priority';
+import { Category } from '../../model/Category';
+import { DataHandlerService } from '../../service/data-handler.service';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { OperType } from '../OperType';
+import { DeviceDetectorService } from 'ngx-device-detector';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-edit-task-dialog',
@@ -17,29 +17,29 @@ import {DeviceDetectorService} from "ngx-device-detector";
 // редактирование/создание задачи
 export class EditTaskDialogComponent implements OnInit {
 
-  private tmpCategory: Category;
+  tmpCategory: Category;
 
-  private categories: Category[];
-  private priorities: Priority[];
+  categories: Category[];
+  priorities: Priority[];
 
-  private dialogTitle: string; // заголовок окна
-  private task: Task; // задача для редактирования/создания
-  private operType: OperType;
+  dialogTitle: string; // заголовок окна
+  task: Task; // задача для редактирования/создания
+  operType: OperType;
 
   // сохраняем все значения в отдельные переменные
   // чтобы изменения не сказывались на самой задаче и можно было отменить изменения
-  private tmpTitle: string;
-  private tmpPriority: Priority;
-  private tmpDate: Date;
+  tmpTitle: string;
+  tmpPriority: Priority;
+  tmpDate: Date;
 
-  private isMobile: boolean;
+  isMobile: boolean;
 
   constructor(
-      private dialogRef: MatDialogRef<EditTaskDialogComponent>, // // для возможности работы с текущим диалог. окном
-      @Inject(MAT_DIALOG_DATA) private data: [Task, string, OperType], // данные, которые передали в диалоговое окно
-      private dataHandler: DataHandlerService, // ссылка на сервис для работы с данными
-      private dialog: MatDialog, // для открытия нового диалогового окна (из текущего) - например для подтверждения удаления
-      private deviceService: DeviceDetectorService // для определения типа устройства
+    private dialogRef: MatDialogRef<EditTaskDialogComponent>, // // для возможности работы с текущим диалог. окном
+    @Inject(MAT_DIALOG_DATA) private data: [Task, string, OperType], // данные, которые передали в диалоговое окно
+    private dataHandler: DataHandlerService, // ссылка на сервис для работы с данными
+    private dialog: MatDialog, // для открытия нового диалогового окна (из текущего) - например для подтверждения удаления
+    private deviceService: DeviceDetectorService // для определения типа устройства
 
   ) {
 
@@ -65,7 +65,7 @@ export class EditTaskDialogComponent implements OnInit {
   }
 
   // нажали ОК
-  private onConfirm(): void {
+  onConfirm(): void {
 
     // считываем все значения для сохранения в поля задачи
     this.task.title = this.tmpTitle;
@@ -81,12 +81,12 @@ export class EditTaskDialogComponent implements OnInit {
   }
 
   // нажали отмену (ничего не сохраняем и закрываем окно)
-  private onCancel(): void {
+  onCancel(): void {
     this.dialogRef.close(null);
   }
 
   // нажали Удалить
-  private delete(): void {
+  delete(): void {
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       maxWidth: '500px',
@@ -105,23 +105,23 @@ export class EditTaskDialogComponent implements OnInit {
   }
 
   // нажали Выполнить (завершить) задачу
-  private complete(): void {
+  complete(): void {
     this.dialogRef.close('complete');
 
   }
 
   // делаем статус задачи "незавершенным" (активируем)
-  private activate(): void {
+  activate(): void {
     this.dialogRef.close('activate');
   }
 
   // можно ли удалять (для показа/скрытия кнопки)
-  private canDelete(): boolean {
+  canDelete(): boolean {
     return this.operType === OperType.EDIT;
   }
 
   // можно ли активировать/завершить задачу (для показа/скрытия кнопки)
-  private canActivateDesactivate(): boolean {
+  canActivateDesactivate(): boolean {
     return this.operType === OperType.EDIT;
   }
 }

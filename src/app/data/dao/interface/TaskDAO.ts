@@ -15,10 +15,10 @@ export interface TaskDAO extends CommonDAO<Task> {
     getCompletedCountInCategory(category: Category): Observable<number>;
 
     // кол-во незавершенных задач в заданной категории (если category === null, то для всех категорий)
-    getUncompletedCountInCategory(category: Category): Observable<number>;
+    getUncompletedCountInCategory(category: Category | null): Observable<number>;
 
     // кол-во всех задач в заданной категории (если category === null, то для всех категорий)
-    getTotalCountInCategory(category: Category): Observable<number>;
+  getTotalCountInCategory(category: Category | null): Observable<number>;
 
     // кол-во всех задач в общем
     getTotalCount(): Observable<number>;

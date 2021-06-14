@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
     selector: 'app-about-dialog',
@@ -10,8 +10,8 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 // диалоговое окно-описание программы
 export class AboutDialogComponent implements OnInit {
 
-    private dialogTitle: string;
-    private message: string;
+    dialogTitle: string;
+    message: string;
 
     constructor(
         private dialogRef: MatDialogRef<AboutDialogComponent>, // для работы с текущим диалог. окном
@@ -28,7 +28,7 @@ export class AboutDialogComponent implements OnInit {
 
 
     // нажали ОК
-    private onConfirm(): void {
+    onConfirm(): void {
         this.dialogRef.close(true);
     }
 
