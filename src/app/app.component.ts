@@ -31,8 +31,8 @@ export class AppComponent implements OnInit {
 
   selectedCategory: Category | null = null;
 
-  searchTaskText = ''; // текущее значение для поиска задач
-  searchCategoryText = ''; // текущее значение для поиска категорий
+  searchTaskText = '';
+  searchCategoryText = '';
 
   priorityFilter!: Priority;
   statusFilter!: boolean;
