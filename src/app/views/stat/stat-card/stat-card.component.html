@@ -1,5 +1,3 @@
-<!--карточка для отображения статистики-->
-
 <div [ngClass]="{'completed-card': completed}" class="card card-stats">
 
     <div class="card-header card-header-warning card-header-icon">
@@ -7,8 +5,8 @@
             <i class="material-icons">{{iconName}}</i>
         </div>
         <p class="card-category"></p>
-        <h3 class="card-title">{{count1}} <span *ngIf="countTotal">из {{countTotal}}</span>
-        </h3>
+        <div class="card-title">{{count1}} <span *ngIf="countTotal">из {{countTotal}}</span>
+        </div>
     </div>
 
     <div class="card-footer">
