@@ -9,7 +9,7 @@ export interface CommonDAO<T> {
     getAll(): Observable<T[]>;
 
     // получить одно значение по id
-    get(id: number): Observable<T | undefined>; // получение значения по уникальному id
+    get(id: number): Observable<T>; // получение значения по уникальному id
 
     // обновить значение
     update(T): Observable<T>;

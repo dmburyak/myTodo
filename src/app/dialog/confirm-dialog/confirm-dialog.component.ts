@@ -1,4 +1,4 @@
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Component, Inject, OnInit} from '@angular/core';
 
 @Component({
@@ -9,8 +9,8 @@ import {Component, Inject, OnInit} from '@angular/core';
 
 // диалоговое окно подтверждения действия
 export class ConfirmDialogComponent implements OnInit {
-    dialogTitle: string;
-    message: string;
+    private dialogTitle: string;
+    private message: string;
 
     constructor(
         private dialogRef: MatDialogRef<ConfirmDialogComponent>, // для работы с текущим диалог. окном
@@ -24,12 +24,12 @@ export class ConfirmDialogComponent implements OnInit {
     }
 
     // нажали ОК
-    onConfirm(): void {
+    private onConfirm(): void {
         this.dialogRef.close(true);
     }
 
     // нажали отмену
-    onCancel(): void {
+    private onCancel(): void {
         this.dialogRef.close(false);
     }
 }

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material';
 import {AboutDialogComponent} from "../../dialog/about/about-dialog.component";
 
 @Component({
@@ -11,10 +11,10 @@ import {AboutDialogComponent} from "../../dialog/about/about-dialog.component";
 // "presentational component": отображает полученные данные
 // подвал - нижняя часть страницы
 export class FooterComponent implements OnInit {
-    year: Date;
-    site = 'https://javabegin.ru/';
-    blog = 'https://javabegin.ru/blog/tag/angular/';
-    siteName = 'JavaBegin';
+    private year: Date;
+    private site = 'https://javabegin.ru/';
+    private blog = 'https://javabegin.ru/blog/tag/angular/';
+    private siteName = 'JavaBegin';
 
     constructor(private dialog: MatDialog) {
     }
@@ -24,7 +24,7 @@ export class FooterComponent implements OnInit {
     }
 
     // окно "О программе"
-    openAboutDialog() {
+    private openAboutDialog() {
         this.dialog.open(AboutDialogComponent,
             {
                 autoFocus: false,

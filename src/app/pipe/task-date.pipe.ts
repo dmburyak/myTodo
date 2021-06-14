@@ -5,11 +5,9 @@ import {DatePipe} from '@angular/common';
 @Pipe({
     name: 'taskDate'
 })
-// export class TaskDatePipe extends DatePipe implements PipeTransform {
+export class TaskDatePipe extends DatePipe implements PipeTransform {
 
-  export class TaskDatePipe implements PipeTransform {
-
-    transform(date: Date | string, format: string = 'mediumDate') {
+    transform(date: Date | string, format: string = 'mediumDate'): string { // mediumDate - форматирование по-умолчанию
 
         if (date == null) {
             return 'Без срока';

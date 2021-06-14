@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MatDialogRef} from '@angular/material/dialog';
+import {MatDialogRef} from '@angular/material';
 import {DataHandlerService} from '../../service/data-handler.service';
 import {Priority} from '../../model/Priority';
 
@@ -15,7 +15,7 @@ import {Priority} from '../../model/Priority';
 
 export class SettingsDialogComponent implements OnInit {
 
-    priorities: Priority[];
+    private priorities: Priority[];
 
     constructor(
         private dialogRef: MatDialogRef<SettingsDialogComponent>, // для возможности работы с текущим диалог. окном
@@ -29,7 +29,7 @@ export class SettingsDialogComponent implements OnInit {
     }
 
     // нажали Закрыть
-    onClose() {
+    private onClose() {
 
         this.dialogRef.close(false);
 
@@ -39,17 +39,17 @@ export class SettingsDialogComponent implements OnInit {
     // т.к. мы меняем значения в массивах, то изменения сразу отражаются на списке задач (не требуется доп. обновления)
 
     // добавили приоритет
-    onAddPriority(priority: Priority): void {
+    private onAddPriority(priority: Priority): void {
         this.dataHandler.addPriority(priority).subscribe();
     }
 
     // удалили приоритет
-    onDeletePriority(priority: Priority): void {
+    private onDeletePriority(priority: Priority): void {
         this.dataHandler.deletePriority(priority.id).subscribe();
     }
 
     // обновили приоритет
-    onUpdatePriority(priority: Priority): void {
+    private onUpdatePriority(priority: Priority): void {
         this.dataHandler.updatePriority(priority).subscribe();
     }
 
