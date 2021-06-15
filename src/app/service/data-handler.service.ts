@@ -69,10 +69,9 @@ export class DataHandlerService {
     return this.tasksService.getTotalCountInCategory(category);
   }
 
-  getTotalCount(): Observable<number> {
-    return this.taskDaoArray.getTotalCount();
-    // return this.tasksService.getTotalCount();
-  }
+  // getTotalCount(): Observable<number> {
+  //   return this.taskDaoArray.getTotalCount();
+  // }
 
   addCategory(title: string): Observable<Category> {
     return this.categoryDaoArray.add(new Category(null, title));
@@ -84,7 +83,8 @@ export class DataHandlerService {
   }
 
   searchCategories(title: string): Observable<Category[]> {
-    return this.categoryDaoArray.search(title);
+    // return this.categoryDaoArray.search(title);
+    return this.categoriesService.search(title);
   }
 
   updateCategory(category: Category): Observable<Category> {
@@ -98,11 +98,8 @@ export class DataHandlerService {
 
   // Priorities
 
-  // getAllPriorities(): Observable<Priority[]> {
-  //   return this.priorityDaoArray.getAll();
-  // }
-
   getAllPriorities(): Observable<Priority[]> {
+    // return this.priorityDaoArray.getAll();
     return this.prioritiesService.getAllPriorities();
   }
 
