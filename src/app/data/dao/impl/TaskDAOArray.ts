@@ -42,7 +42,7 @@ export class TaskDAOArray implements TaskDAO {
     return of(task);
 
   }
-
+/*
   search(category: Category | null, searchText: string, status: boolean, priority: Priority): Observable<Task[]> {
 
     return of(this.searchTasks(category, searchText, status, priority));
@@ -91,7 +91,7 @@ export class TaskDAOArray implements TaskDAO {
   getTotalCountInCategory(category: Category | null): Observable<number> {
     return of(this.searchTasks(category, null, null, null).length);
   }
-
+*/
   // кол-во всех задач в общем
   getTotalCount(): Observable<number> {
     return of(TestData.tasks.length);

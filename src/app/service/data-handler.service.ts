@@ -28,9 +28,9 @@ export class DataHandlerService {
   ) {
   }
 
-  getAllTasks(): Observable<Task[]> {
-    return this.taskDaoArray.getAll();
-  }
+  // getAllTasks(): Observable<Task[]> {
+  //   return this.taskDaoArray.getAll();
+  // }
 
   addTask(task: Task): Observable<Task> {
     return this.taskDaoArray.add(task);
@@ -50,35 +50,37 @@ export class DataHandlerService {
   }
 
   getCompletedCountInCategory(category: Category | null): Observable<number> {
-    return this.taskDaoArray.getCompletedCountInCategory(category);
+    // return this.taskDaoArray.getCompletedCountInCategory(category);
+    return this.tasksService.getCompletedCountInCategory(category);
   }
 
   getUncompletedTotalCount(): Observable<number> {
-    return this.taskDaoArray.getUncompletedCountInCategory(null);
+    // return this.taskDaoArray.getUncompletedCountInCategory(null);
+    return this.tasksService.getUncompletedCountInCategory(null);
   }
 
   getUncompletedCountInCategory(category: Category | null): Observable<number> {
-    return this.taskDaoArray.getUncompletedCountInCategory(category);
+    // return this.taskDaoArray.getUncompletedCountInCategory(category);
+    return this.tasksService.getUncompletedCountInCategory(category);
   }
 
   getTotalCountInCategory(category: Category | null): Observable<number> {
-    return this.taskDaoArray.getTotalCountInCategory(category);
+    // return this.taskDaoArray.getTotalCountInCategory(category);
+    return this.tasksService.getTotalCountInCategory(category);
   }
 
   getTotalCount(): Observable<number> {
     return this.taskDaoArray.getTotalCount();
+    // return this.tasksService.getTotalCount();
   }
 
   addCategory(title: string): Observable<Category> {
     return this.categoryDaoArray.add(new Category(null, title));
   }
 
-  // getAllCategories(): Observable<Category[]> {
-  //     return this.categoryDaoArray.getAll();
-  // }
-
   getAllCategories(): Observable<Category[]> {
-    return this.categoriesService.getAllCategories();
+      // return this.categoryDaoArray.getAll();
+  return this.categoriesService.getAllCategories();
   }
 
   searchCategories(title: string): Observable<Category[]> {

@@ -6,7 +6,7 @@ import {Observable} from 'rxjs';
 
 // специфичные методы для работы с задачами (которые не входят в обычный CRUD)
 export interface TaskDAO extends CommonDAO<Task> {
-
+/*
     // поиск задач по всем параметрам
     // если какой-либо параметр равен null - он не будет учитываться при поиске
     search(category: Category, searchText: string, status: boolean, priority: Priority): Observable<Task[]>;
@@ -22,5 +22,5 @@ export interface TaskDAO extends CommonDAO<Task> {
 
     // кол-во всех задач в общем
     getTotalCount(): Observable<number>;
-
+*/
 }
