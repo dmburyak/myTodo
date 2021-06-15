@@ -9,6 +9,7 @@ import { CategoryDAOArray } from '../data/dao/impl/CategoryDAOArray';
 import { PriorityDAOArray } from '../data/dao/impl/PriorityDAOArray';
 import { CategoriesService } from './categories.service';
 import { PrioritiesService } from './priorities.service';
+import { TasksService } from './tasks.service';
 
 
 @Injectable({
@@ -23,6 +24,7 @@ export class DataHandlerService {
   constructor(
     private categoriesService: CategoriesService,
     private prioritiesService: PrioritiesService,
+    private tasksService: TasksService
   ) {
   }
 
@@ -43,9 +45,9 @@ export class DataHandlerService {
   }
 
   searchTasks(category: Category | null, searchText: string, status: boolean, priority: Priority): Observable<Task[]> {
-    return this.taskDaoArray.search(category, searchText, status, priority);
+    // return this.taskDaoArray.search(category, searchText, status, priority);
+    return this.tasksService.search(category, searchText, status, priority);
   }
-
 
   getCompletedCountInCategory(category: Category | null): Observable<number> {
     return this.taskDaoArray.getCompletedCountInCategory(category);

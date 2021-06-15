@@ -2,146 +2,270 @@
   {
     "id": 1,
     "title": "Залить бензин полный бак",
-    "priority": 3,
+    "priority": {
+      "id": 3,
+      "title": "Высокий",
+      "color": "#F1828D"
+    },
     "completed": false,
-    "category": 10,
+    "category": {
+      "id": 10,
+      "title": "Автомобиль"
+    },
     "date": "2019-04-10T00:00:00.000Z"
   },
   {
     "id": 2,
     "title": "Передать отчеты начальнику управления",
-    "priority": 1,
+    "priority": {
+      "id": 1,
+      "title": "Низкий",
+      "color": "#e5e5e5"
+    },
     "completed": false,
-    "category": 1,
+    "category": {
+      "id": 1,
+      "title": "Работа"
+    },
     "date": "2019-04-11T00:00:00.000Z"
   },
   {
     "id": 3,
     "title": "Убраться у себя в комнате, полить растения",
-    "priority": 3,
+    "priority": {
+      "id": 3,
+      "title": "Высокий",
+      "color": "#F1828D"
+    },
     "completed": true,
-    "category": 2
+    "category": {
+      "id": 2,
+      "title": "Семья"
+    }
   },
   {
     "id": 4,
     "title": "Сходить в парк с семьей, пригласить друзей",
-    "priority": 2,
+    "priority": {
+      "id": 2,
+      "title": "Средний",
+      "color": "#85D1B2"
+    },
     "completed": false,
-    "category": 2,
+    "category": {
+      "id": 2,
+      "title": "Семья"
+    },
     "date": "2019-08-17T00:00:00.000Z"
   },
   {
     "id": 5,
     "title": "Найти и выучить учебник по квантовой физике",
     "completed": false,
-    "category": 3
+    "category": {
+      "id": 3,
+      "title": "Учеба"
+    }
   },
   {
     "id": 6,
     "title": "Сходить на семинар по программированию",
-    "priority": 2,
+    "priority": {
+      "id": 2,
+      "title": "Средний",
+      "color": "#85D1B2"
+    },
     "completed": true,
-    "category": 3,
+    "category": {
+      "id": 3,
+      "title": "Учеба"
+    },
     "date": "2019-06-11T00:00:00.000Z"
   },
   {
     "id": 7,
     "title": "Найти билеты в Турцию, выбрать отель",
-    "priority": 3,
+    "priority": {
+      "id": 3,
+      "title": "Высокий",
+      "color": "#F1828D"
+    },
     "completed": false,
-    "category": 4
+    "category": {
+      "id": 4,
+      "title": "Отдых"
+    }
   },
   {
     "id": 8,
     "title": "Приготовить ужин для всей семьи (семга с картошкой)",
     "completed": false,
-    "category": 6
+    "category": {
+      "id": 6,
+      "title": "Еда"
+    }
   },
   {
     "id": 9,
     "title": "Подтянуться 10 раз",
-    "priority": 3,
+    "priority": {
+      "id": 3,
+      "title": "Высокий",
+      "color": "#F1828D"
+    },
     "completed": false,
-    "category": 5,
+    "category": {
+      "id": 5,
+      "title": "Спорт"
+    },
     "date": "2019-03-12T00:00:00.000Z"
   },
   {
     "id": 10,
     "title": "Пробежать 100 м",
-    "priority": 1,
+    "priority": {
+      "id": 1,
+      "title": "Низкий",
+      "color": "#e5e5e5"
+    },
     "completed": true,
-    "category": 5
+    "category": {
+      "id": 5,
+      "title": "Спорт"
+    }
   },
   {
     "id": 11,
     "title": "Организовать детский праздник ",
     "completed": false,
-    "category": 1
+    "category": {
+      "id": 5,
+      "title": "Спорт"
+    }
   },
   {
     "id": 12,
     "title": "Сходить на лекцию \"Как научиться программировать на Java\"",
-    "priority": 2,
+    "priority": {
+      "id": 2,
+      "title": "Средний",
+      "color": "#85D1B2"
+    },
     "completed": false,
-    "category": 3
+    "category": {
+      "id": 3,
+      "title": "Учеба"
+    }
   },
   {
     "id": 13,
     "title": "Купить продукты на неделю",
-    "priority": 3,
+    "priority": {
+      "id": 3,
+      "title": "Высокий",
+      "color": "#F1828D"
+    },
     "completed": false,
-    "category": 6,
+    "category": {
+      "id": 6,
+      "title": "Еда"
+    },
     "date": "2019-05-11T00:00:00.000Z"
   },
   {
     "id": 14,
     "title": "Провести собрание по поводу всех проектов",
     "completed": true,
-    "category": 1
+    "category": {
+      "id": 1,
+      "title": "Работа"
+    }
   },
   {
     "id": 15,
     "title": "Сдать экзамен по Java",
-    "priority": 3,
+    "priority": {
+      "id": 3,
+      "title": "Высокий",
+      "color": "#F1828D"
+    },
     "completed": true,
-    "category": 1
+    "category": {
+      "id": 5,
+      "title": "Спорт"
+    }
   },
   {
     "id": 16,
     "title": "Положить 100 000 р в банк на депозит",
-    "priority": 4,
+    "priority": {
+      "id": 4,
+      "title": "Очень срочно!!",
+      "color": "#F1128D"
+    },
     "completed": false,
-    "category": 7
+    "category": {
+      "id": 7,
+      "title": "Финансы"
+    }
   },
   {
     "id": 17,
     "title": "Попросить аванс на работе",
-    "priority": 3,
+    "priority": {
+      "id": 3,
+      "title": "Высокий",
+      "color": "#F1828D"
+    },
     "completed": false,
-    "category": 7
+    "category": {
+      "id": 7,
+      "title": "Финансы"
+    }
   },
   {
     "id": 18,
     "title": "Сдать анализы, проверить гемоглобин",
-    "priority": 4,
+    "priority": {
+      "id": 4,
+      "title": "Очень срочно!!",
+      "color": "#F1128D"
+    },
     "completed": false,
-    "category": 9,
+    "category": {
+      "id": 9,
+      "title": "Здоровье"
+    },
     "date": "2020-12-11T00:00:00.000Z"
   },
   {
     "id": 19,
     "title": "Сравнить новый айпад с самсунгом",
-    "priority": 1,
+    "priority": {
+      "id": 1,
+      "title": "Низкий",
+      "color": "#e5e5e5"
+    },
     "completed": false,
-    "category": 8,
+    "category": {
+      "id": 8,
+      "title": "Гаджеты"
+    },
     "date": "2019-10-11T00:00:00.000Z"
   },
   {
     "id": 20,
     "title": "Футбол с сотрудниками",
-    "priority": 1,
+    "priority": {
+      "id": 1,
+      "title": "Низкий",
+      "color": "#e5e5e5"
+    },
     "completed": false,
-    "category": 5,
+    "category": {
+      "id": 5,
+      "title": "Спорт"
+    },
     "date": "2019-03-17T00:00:00.000Z"
   }
 ]
