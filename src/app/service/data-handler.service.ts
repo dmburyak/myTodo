@@ -1,103 +1,116 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
-import {Category} from '../model/Category';
-import {Priority} from '../model/Priority';
-import {Task} from '../model/Task';
-import {TaskDAOArray} from '../data/dao/impl/TaskDAOArray';
-import {CategoryDAOArray} from '../data/dao/impl/CategoryDAOArray';
-import {PriorityDAOArray} from '../data/dao/impl/PriorityDAOArray';
+import { Category } from '../model/Category';
+import { Priority } from '../model/Priority';
+import { Task } from '../model/Task';
+import { TaskDAOArray } from '../data/dao/impl/TaskDAOArray';
+import { CategoryDAOArray } from '../data/dao/impl/CategoryDAOArray';
+import { PriorityDAOArray } from '../data/dao/impl/PriorityDAOArray';
+import { CategoriesService } from './categories.service';
+import { PrioritiesService } from './priorities.service';
 
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class DataHandlerService {
 
-    private taskDaoArray = new TaskDAOArray();
-    private categoryDaoArray = new CategoryDAOArray();
-    private priorityDaoArray = new PriorityDAOArray();
+  private taskDaoArray = new TaskDAOArray();
+  private categoryDaoArray = new CategoryDAOArray();
+  private priorityDaoArray = new PriorityDAOArray();
 
-    constructor() {
-    }
+  constructor(
+    private categoriesService: CategoriesService,
+    private prioritiesService: PrioritiesService,
+  ) {
+  }
 
-    getAllTasks(): Observable<Task[]> {
-        return this.taskDaoArray.getAll();
-    }
+  getAllTasks(): Observable<Task[]> {
+    return this.taskDaoArray.getAll();
+  }
 
-    addTask(task: Task): Observable<Task> {
-        return this.taskDaoArray.add(task);
-    }
+  addTask(task: Task): Observable<Task> {
+    return this.taskDaoArray.add(task);
+  }
 
-    deleteTask(id: number): Observable<Task> {
-        return this.taskDaoArray.delete(id);
-    }
+  deleteTask(id: number): Observable<Task> {
+    return this.taskDaoArray.delete(id);
+  }
 
-    updateTask(task: Task): Observable<Task> {
-        return this.taskDaoArray.update(task);
-    }
+  updateTask(task: Task): Observable<Task> {
+    return this.taskDaoArray.update(task);
+  }
 
   searchTasks(category: Category | null, searchText: string, status: boolean, priority: Priority): Observable<Task[]> {
-        return this.taskDaoArray.search(category, searchText, status, priority);
-    }
+    return this.taskDaoArray.search(category, searchText, status, priority);
+  }
 
 
   getCompletedCountInCategory(category: Category | null): Observable<number> {
-        return this.taskDaoArray.getCompletedCountInCategory(category);
-    }
+    return this.taskDaoArray.getCompletedCountInCategory(category);
+  }
 
-    getUncompletedTotalCount(): Observable<number> {
-        return this.taskDaoArray.getUncompletedCountInCategory(null);
-    }
+  getUncompletedTotalCount(): Observable<number> {
+    return this.taskDaoArray.getUncompletedCountInCategory(null);
+  }
 
   getUncompletedCountInCategory(category: Category | null): Observable<number> {
-        return this.taskDaoArray.getUncompletedCountInCategory(category);
-    }
+    return this.taskDaoArray.getUncompletedCountInCategory(category);
+  }
 
   getTotalCountInCategory(category: Category | null): Observable<number> {
-        return this.taskDaoArray.getTotalCountInCategory(category);
-    }
+    return this.taskDaoArray.getTotalCountInCategory(category);
+  }
 
-    getTotalCount(): Observable<number> {
-        return this.taskDaoArray.getTotalCount();
-    }
+  getTotalCount(): Observable<number> {
+    return this.taskDaoArray.getTotalCount();
+  }
 
-    addCategory(title: string): Observable<Category> {
-        return this.categoryDaoArray.add(new Category(null, title));
-    }
+  addCategory(title: string): Observable<Category> {
+    return this.categoryDaoArray.add(new Category(null, title));
+  }
 
-    getAllCategories(): Observable<Category[]> {
-        return this.categoryDaoArray.getAll();
-    }
+  // getAllCategories(): Observable<Category[]> {
+  //     return this.categoryDaoArray.getAll();
+  // }
 
-    searchCategories(title: string): Observable<Category[]> {
-        return this.categoryDaoArray.search(title);
-    }
+  getAllCategories(): Observable<Category[]> {
+    return this.categoriesService.getAllCategories();
+  }
 
-    updateCategory(category: Category): Observable<Category> {
-        return this.categoryDaoArray.update(category);
-    }
+  searchCategories(title: string): Observable<Category[]> {
+    return this.categoryDaoArray.search(title);
+  }
 
-    deleteCategory(id: number): Observable<Category> {
-        return this.categoryDaoArray.delete(id);
-    }
+  updateCategory(category: Category): Observable<Category> {
+    return this.categoryDaoArray.update(category);
+  }
+
+  deleteCategory(id: number | null): Observable<Category> {
+    return this.categoryDaoArray.delete(id);
+  }
 
 
-    // приоритеты
+  // Priorities
 
-    getAllPriorities(): Observable<Priority[]> {
-        return this.priorityDaoArray.getAll();
-    }
+  // getAllPriorities(): Observable<Priority[]> {
+  //   return this.priorityDaoArray.getAll();
+  // }
 
-    addPriority(priority: Priority): Observable<Priority> {
-        return this.priorityDaoArray.add(priority);
-    }
+  getAllPriorities(): Observable<Priority[]> {
+    return this.prioritiesService.getAllPriorities();
+  }
 
-    deletePriority(id: number): Observable<Priority> {
-        return this.priorityDaoArray.delete(id);
-    }
+  addPriority(priority: Priority): Observable<Priority> {
+    return this.priorityDaoArray.add(priority);
+  }
 
-    updatePriority(priority: Priority): Observable<Priority> {
-        return this.priorityDaoArray.update(priority);
-    }
+  deletePriority(id: number): Observable<Priority> {
+    return this.priorityDaoArray.delete(id);
+  }
+
+  updatePriority(priority: Priority): Observable<Priority> {
+    return this.priorityDaoArray.update(priority);
+  }
 }

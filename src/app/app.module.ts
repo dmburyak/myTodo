@@ -38,6 +38,7 @@ import { TasksComponent } from './views/tasks/tasks.component';
 import { EditTaskDialogComponent } from './dialog/edit-task-dialog/edit-task-dialog.component';
 import { ConfirmDialogComponent } from './dialog/confirm-dialog/confirm-dialog.component';
 import { TaskDatePipe } from './pipe/task-date.pipe';
+import { HttpClientModule } from '@angular/common/http';
 
 registerLocaleData(localeRu);
 
@@ -64,6 +65,7 @@ registerLocaleData(localeRu);
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    HttpClientModule,
     MatDialogModule,
     MatFormFieldModule,
     MatTableModule,

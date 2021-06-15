@@ -38,8 +38,8 @@ export class AppComponent implements OnInit {
   statusFilter!: boolean;
 
   menuOpened!: boolean;
-  menuMode!: "over" | "push" | "slide";
-  menuPosition!: "start" | "end" | "left" | "right" | "top" | "bottom";
+  menuMode!: 'over' | 'push' | 'slide';
+  menuPosition!: 'start' | 'end' | 'left' | 'right' | 'top' | 'bottom';
   showBackdrop!: boolean;
 
   isMobile: boolean;
@@ -65,10 +65,14 @@ export class AppComponent implements OnInit {
 
     this.dataHandler.getAllPriorities()
       .subscribe(priorities => this.priorities = priorities);
-    this.dataHandler.getAllCategories()
-      .subscribe(categories => this.categories = categories);
 
-    this.fillCategories();
+    this.dataHandler.getAllCategories()
+      .subscribe(categories => {
+        this.categories = categories;
+        this.fillCategories();
+      });
+
+    // this.fillCategories();
 
     this.onSelectCategory(null);
 
@@ -81,10 +85,10 @@ export class AppComponent implements OnInit {
   onAddCategory(title: string): void {
     this.dataHandler.addCategory(title)
       .subscribe(() => {
-        this.onSearchCategory(this.searchCategoryText);
-        this.fillCategories();
-      }
-    );
+          this.onSearchCategory(this.searchCategoryText);
+          this.fillCategories();
+        }
+      );
   }
 
   fillCategories() {
@@ -96,9 +100,14 @@ export class AppComponent implements OnInit {
     this.categories = this.categories.sort((a, b) => a.title.localeCompare(b.title));
 
     this.categories.forEach(cat => {
-      this.dataHandler.getUncompletedCountInCategory(cat)
-        .subscribe(count => this.categoryMap.set(cat, count));
-    });
+        this.dataHandler.getUncompletedCountInCategory(cat)
+          .subscribe(count => {
+            this.categoryMap.set(cat, count)
+          });
+      }
+    );
+
+   // console.log(this.categoryMap);
 
   }
 
@@ -207,9 +216,9 @@ export class AppComponent implements OnInit {
 
     this.dataHandler.addTask(task).pipe(
       concatMap(task => {
-        if (!task.category) {
-          return of(({t: task, count: 0}));
-        }
+          if (!task.category) {
+            return of(({t: task, count: 0}));
+          }
           return this.dataHandler.getUncompletedCountInCategory(task.category)
             .pipe(map(count => {
               return ({t: task, count});

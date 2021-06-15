@@ -2,11 +2,15 @@ import {CategoryDAO} from '../interface/CategoryDAO';
 import {TestData} from '../../TestData';
 import {Category} from '../../../model/Category';
 import {Observable, of} from 'rxjs';
+import { CategoriesService } from '../../../service/categories.service';
 
 // реализация работы с приоритетами в виде массивов
 // все методы DAO возвращают тип Observable, для реактивных возможностей
 // для работы с БД - нужно изменить реализацию каждого метода, чтобы обращался не к массивам, а делал RESTful запрос или напрямую к БД
 export class CategoryDAOArray implements CategoryDAO {
+
+  constructor() {
+  }
 
     get(id: number): Observable<Category> {
 
@@ -19,7 +23,13 @@ export class CategoryDAOArray implements CategoryDAO {
         return of(TestData.categories);
     }
 
-    add(category: Category): Observable<Category> {
+  // getAll2(): Observable<Category[]> {
+  //
+  //   return this.categoriesService.getAllCategories();
+  // }
+
+
+  add(category: Category): Observable<Category> {
 
         // если id пустой - генерируем его
         if (category.id === null || category.id === 0) {

@@ -75,7 +75,8 @@
   {
     "id": 11,
     "title": "Организовать детский праздник ",
-    "completed": false
+    "completed": false,
+    "category": 1
   },
   {
     "id": 12,
@@ -102,7 +103,8 @@
     "id": 15,
     "title": "Сдать экзамен по Java",
     "priority": 3,
-    "completed": true
+    "completed": true,
+    "category": 1
   },
   {
     "id": 16,

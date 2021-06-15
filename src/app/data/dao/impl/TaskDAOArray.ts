@@ -59,7 +59,7 @@ export class TaskDAOArray implements TaskDAO {
     }
 
     if (category != null) {
-      allTasks = allTasks.filter(task => task.category === category);
+      allTasks = allTasks.filter(task => task.category.title === category.title);
     }
 
     if (priority != null) {
@@ -71,6 +71,7 @@ export class TaskDAOArray implements TaskDAO {
         task =>
           task.title.toUpperCase().includes(searchText.toUpperCase()) // учитываем текст поиска (если '' - возвращаются все значения)
       );
+
     }
 
     return allTasks;
