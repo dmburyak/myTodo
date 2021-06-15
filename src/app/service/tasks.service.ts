@@ -47,7 +47,7 @@ export class TasksService {
     }
 
     if (priority != null) {
-      filteredTasks = filteredTasks.filter(task => task.priority === priority);
+      filteredTasks = filteredTasks.filter(task => task.priority.title === priority.title);
     }
 
     if (searchText != null) {

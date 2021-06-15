@@ -72,8 +72,6 @@ export class AppComponent implements OnInit {
         this.fillCategories();
       });
 
-    // this.fillCategories();
-
     this.onSelectCategory(null);
 
     if (!this.isMobile && !this.isTablet) {
@@ -106,8 +104,6 @@ export class AppComponent implements OnInit {
           });
       }
     );
-
-   // console.log(this.categoryMap);
 
   }
 

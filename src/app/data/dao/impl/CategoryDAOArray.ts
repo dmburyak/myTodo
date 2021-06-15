@@ -11,7 +11,7 @@ export class CategoryDAOArray implements CategoryDAO {
 
   constructor() {
   }
-
+/*
     get(id: number): Observable<Category> {
 
         return of(TestData.categories.find(category => category.id === id));
@@ -22,12 +22,7 @@ export class CategoryDAOArray implements CategoryDAO {
         TestData.categories.sort((c1, c2) => c1.title.localeCompare(c2.title)); // по алфавиту
         return of(TestData.categories);
     }
-
-  // getAll2(): Observable<Category[]> {
-  //
-  //   return this.categoriesService.getAllCategories();
-  // }
-
+*/
 
   add(category: Category): Observable<Category> {
 
@@ -72,13 +67,13 @@ export class CategoryDAOArray implements CategoryDAO {
         return Math.max.apply(Math, TestData.categories.map(c => c.id)) + 1;
     }
 
-    // поиск категорий по названию
+  /*  // поиск категорий по названию
     search(title: string): Observable<Category[]> {
 
         return of(TestData.categories.filter(
             cat => cat.title.toUpperCase().includes(title.toUpperCase()))
             .sort((c1, c2) => c1.title.localeCompare(c2.title)));
     }
-
+*/
 
 }

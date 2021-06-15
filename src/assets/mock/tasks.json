@@ -61,6 +61,11 @@
   {
     "id": 5,
     "title": "Найти и выучить учебник по квантовой физике",
+    "priority": {
+      "id": 2,
+      "title": "Средний",
+      "color": "#85D1B2"
+    },
     "completed": false,
     "category": {
       "id": 3,
@@ -99,6 +104,11 @@
   {
     "id": 8,
     "title": "Приготовить ужин для всей семьи (семга с картошкой)",
+    "priority": {
+      "id": 2,
+      "title": "Средний",
+      "color": "#85D1B2"
+    },
     "completed": false,
     "category": {
       "id": 6,
@@ -137,6 +147,11 @@
   {
     "id": 11,
     "title": "Организовать детский праздник ",
+    "priority": {
+      "id": 2,
+      "title": "Средний",
+      "color": "#85D1B2"
+    },
     "completed": false,
     "category": {
       "id": 5,
@@ -175,6 +190,11 @@
   {
     "id": 14,
     "title": "Провести собрание по поводу всех проектов",
+    "priority": {
+      "id": 2,
+      "title": "Средний",
+      "color": "#85D1B2"
+    },
     "completed": true,
     "category": {
       "id": 1,

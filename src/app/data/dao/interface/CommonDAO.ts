@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 
 // все методы возвращают Observable - для асинхронности и работы в реактивном стиле
 export interface CommonDAO<T> {
-
+/*
     // получить все значения
     getAll(): Observable<T[]>;
 
@@ -19,5 +19,5 @@ export interface CommonDAO<T> {
 
     // добавить значение
     add(T): Observable<T>;
-
+*/
 }

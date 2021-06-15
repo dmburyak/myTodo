@@ -6,6 +6,6 @@ import {Observable} from 'rxjs';
 export interface CategoryDAO extends CommonDAO<Category> {
 
     // поиск категорий по названию
-    search(title: string): Observable<Category[]>;
+  // search(title: string): Observable<Category[]>;
 
 }
