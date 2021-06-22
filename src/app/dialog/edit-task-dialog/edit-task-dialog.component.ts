@@ -59,8 +59,8 @@ export class EditTaskDialogComponent implements OnInit {
     this.tmpDate = this.task.date;
 
 
-    this.dataHandler.getAllCategories().subscribe(items => this.categories = items);
-    this.dataHandler.getAllPriorities().subscribe(items => this.priorities = items);
+    this.categories = this.dataHandler.getAllCategories();
+    this.categories = this.dataHandler.getAllPriorities();
 
   }
 

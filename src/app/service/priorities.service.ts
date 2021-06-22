@@ -10,22 +10,20 @@ import { map } from 'rxjs/operators';
 })
 export class PrioritiesService {
 
-  url = 'assets/mock/priorities.json';
+  // url = 'assets/mock/priorities.json';
+  url = 'http://localhost:3300/priorities';
   allPriorities: Priority[] = [];
 
   constructor(private http: HttpClient) {
   }
 
-  getAllPriorities(): Observable<Priority[]> {
-    if (this.allPriorities.length > 0 ) {
-      return of(this.allPriorities);
-    } else {
+  getPrioritiesFromBack(): Observable<any> {
     return this.http.get(`${this.url}`)
-      .pipe(map(priorities => {
-        this.allPriorities = priorities as Priority[];
-        return this.allPriorities;
-      }));
-    }
+      .pipe(map((priorities => this.allPriorities = priorities as Priority[])));
+  }
+
+  getAllPriorities(): Priority[] {
+      return this.allPriorities;
   }
 
 }

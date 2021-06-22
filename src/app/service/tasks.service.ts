@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Task } from '../model/Task';
 import { Category } from '../model/Category';
 import { Priority } from '../model/Priority';
@@ -11,26 +11,29 @@ import { map } from 'rxjs/operators';
 })
 export class TasksService {
 
-  url = 'assets/mock/tasks.json';
+  // url = 'assets/mock/tasks.json';
+  url = 'http://localhost:3300/tasks';
   allTasks: Task[] = [];
 
   constructor(private http: HttpClient) {
   }
 
-  searchTasks(category: Category | null, searchText: string, status: boolean, priority: Priority): Observable<Task[]> {
-    return this.search(category, searchText, status, priority);
+  getTasksFromBack(): Observable<any> {
+    return this.http.get(this.url)
+      .pipe(map(tasks => this.allTasks = tasks as Task[]));
   }
 
-  search(category: Category | null, searchText: string, status: boolean, priority: Priority): Observable<Task[]> {
+  getAllTasks(): Task[] {
+    return this.allTasks;
+  }
 
-    if (this.allTasks.length > 0) {
-      return of(this.filterTasks(category, searchText, status, priority));
-    } else {
-      return this.http.get(this.url).pipe(map(tasks => {
-        this.allTasks = tasks as Task[];
-        return this.filterTasks(category, searchText, status, priority);
-      }))
-    }
+  // searchTasks(category: Category | null, searchText: string, status: boolean, priority: Priority): Observable<Task[]> {
+  //  console.log('all0');
+  //   return this.search(category, searchText, status, priority);
+  // }
+
+  search(category: Category | null, searchText: string, status: boolean, priority: Priority): Task[] {
+    return this.filterTasks(category, searchText, status, priority);
   }
 
   private filterTasks(category: Category | null, searchText: string, status: boolean, priority: Priority): Task[] {
@@ -57,26 +60,23 @@ export class TasksService {
       );
 
     }
-
     return filteredTasks;
   }
 
   // кол-во завершенных задач в заданной категории (если category === null, то для всех категорий)
-  getCompletedCountInCategory(category: Category | null): Observable<number> {
-    return this.search(category, null, true, null)
-      .pipe(map(tasks => tasks.length));
+  getCompletedCountInCategory(category: Category | null): number {
+  return this.search(category, null, true, null).length;
+
   }
 
   // кол-во незавершенных задач в заданной категории (если category === null, то для всех категорий)
-  getUncompletedCountInCategory(category: Category | null): Observable<number> {
-    return this.searchTasks(category, null, false, null)
-      .pipe(map(tasks => tasks.length));
+  getUncompletedCountInCategory(category: Category | null): number {
+    return this.search(category, null, false, null).length;
   }
 
   // кол-во всех задач в заданной категории (если category === null, то для всех категорий)
-  getTotalCountInCategory(category: Category | null): Observable<number> {
-    return this.searchTasks(category, null, null, null)
-      .pipe(map(tasks => tasks.length));
+  getTotalCountInCategory(category: Category | null): number {
+    return this.search(category, null, null, null).length;
   }
 
 }

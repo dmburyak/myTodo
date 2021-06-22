@@ -3,8 +3,6 @@ import { DataHandlerService } from './service/data-handler.service';
 import { Task } from './model/Task';
 import { Category } from './model/Category';
 import { Priority } from './model/Priority';
-import { of, zip } from 'rxjs';
-import { concatMap, map } from 'rxjs/operators';
 import { IntroService } from './service/intro.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
@@ -18,14 +16,14 @@ export class AppComponent implements OnInit {
 
   categoryMap = new Map<Category, number>();
 
-  tasks!: Task[];
-  categories!: Category[];
-  priorities!: Priority[];
+  tasks: Task[] = [];
+  categories: Category[] = [];
+  priorities: Priority[] = [];
 
-  totalTasksCountInCategory!: number;
-  completedCountInCategory!: number;
-  uncompletedCountInCategory!: number;
-  uncompletedTotalTasksCount!: number;
+  totalTasksCountInCategory = 0;
+  completedCountInCategory = 0;
+  uncompletedCountInCategory = 0;
+  uncompletedTotalTasksCount = 0;
 
   showStat = true;
 
@@ -63,16 +61,13 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
 
-    this.dataHandler.getAllPriorities()
-      .subscribe(priorities => this.priorities = priorities);
-
-    this.dataHandler.getAllCategories()
-      .subscribe(categories => {
-        this.categories = categories;
+    this.dataHandler.getDataFromBackend()
+      .subscribe(() => {
+        this.tasks = this.dataHandler.getAllTasks();
+        this.priorities = this.dataHandler.getAllPriorities();
+        this.categories = this.dataHandler.getAllCategories();
         this.fillCategories();
-      });
-
-    this.onSelectCategory(null);
+      })
 
     if (!this.isMobile && !this.isTablet) {
       this.introService.startIntroJS(true);
@@ -98,12 +93,12 @@ export class AppComponent implements OnInit {
     this.categories = this.categories.sort((a, b) => a.title.localeCompare(b.title));
 
     this.categories.forEach(cat => {
-        this.dataHandler.getUncompletedCountInCategory(cat)
-          .subscribe(count => {
-            this.categoryMap.set(cat, count)
-          });
+        let count = this.dataHandler.getUncompletedCountInCategory(cat);
+        this.categoryMap.set(cat, count);
       }
     );
+
+    this.updateStat();
 
   }
 
@@ -111,11 +106,9 @@ export class AppComponent implements OnInit {
 
     this.searchCategoryText = title;
 
-    this.dataHandler.searchCategories(title)
-      .subscribe(categories => {
-        this.categories = categories;
-        this.fillCategories();
-      });
+    this.categories = this.dataHandler.searchCategories(title);
+    this.fillCategories();
+
   }
 
   onSelectCategory(category: Category | null): void {
@@ -155,30 +148,30 @@ export class AppComponent implements OnInit {
   }
 
   onDeleteTask(task: Task) {
+    /*
+        this.dataHandler.deleteTask(task.id)
+          .pipe(
+            concatMap(task => {
+                if (!task.category) {
+                  return of(({t: task, count: 0}));
+                }
+                return this.dataHandler.getUncompletedCountInCategory(task.category)
+                  .pipe(map(count => {
+                    return ({t: task, count});
+                  }))
+              }
+            ))
+          .subscribe(result => {
 
-    this.dataHandler.deleteTask(task.id)
-      .pipe(
-        concatMap(task => {
-            if (!task.category) {
-              return of(({t: task, count: 0}));
+            const t = result.t as Task;
+            if (t.category) {
+              this.categoryMap.set(t.category, result.count);
             }
-            return this.dataHandler.getUncompletedCountInCategory(task.category)
-              .pipe(map(count => {
-                return ({t: task, count});
-              }))
-          }
-        ))
-      .subscribe(result => {
 
-        const t = result.t as Task;
-        if (t.category) {
-          this.categoryMap.set(t.category, result.count);
-        }
+            this.updateTasksAndStat();
 
-        this.updateTasksAndStat();
-
-      });
-
+          });
+    */
 
   }
 
@@ -198,41 +191,39 @@ export class AppComponent implements OnInit {
   }
 
   updateTasks(): void {
-    this.dataHandler.searchTasks(
+    this.tasks = this.dataHandler.searchTasks(
       this.selectedCategory,
       this.searchTaskText,
       this.statusFilter,
       this.priorityFilter
-    ).subscribe((tasks: Task[]) => {
-      this.tasks = tasks;
-    });
+    );
   }
 
   onAddTask(task: Task) {
+    /*
+        this.dataHandler.addTask(task).pipe(
+          concatMap(task => {
+              if (!task.category) {
+                return of(({t: task, count: 0}));
+              }
+              return this.dataHandler.getUncompletedCountInCategory(task.category)
+                .pipe(map(count => {
+                  return ({t: task, count});
+                }));
+            }
+          ))
+          .subscribe(result => {
 
-    this.dataHandler.addTask(task).pipe(
-      concatMap(task => {
-          if (!task.category) {
-            return of(({t: task, count: 0}));
-          }
-          return this.dataHandler.getUncompletedCountInCategory(task.category)
-            .pipe(map(count => {
-              return ({t: task, count});
-            }));
-        }
-      ))
-      .subscribe(result => {
+            const t = result.t as Task;
 
-        const t = result.t as Task;
+            if (t.category) {
+              this.categoryMap.set(t.category, result.count);
+            }
 
-        if (t.category) {
-          this.categoryMap.set(t.category, result.count);
-        }
+            this.updateTasksAndStat();
 
-        this.updateTasksAndStat();
-
-      });
-
+          });
+    */
   }
 
   updateTasksAndStat(): void {
@@ -244,18 +235,10 @@ export class AppComponent implements OnInit {
 
   updateStat(): void {
 
-    zip(
-      this.dataHandler.getTotalCountInCategory(this.selectedCategory),
-      this.dataHandler.getCompletedCountInCategory(this.selectedCategory),
-      this.dataHandler.getUncompletedCountInCategory(this.selectedCategory),
-      this.dataHandler.getUncompletedTotalCount())
-
-      .subscribe(array => {
-        this.totalTasksCountInCategory = array[0];
-        this.completedCountInCategory = array[1];
-        this.uncompletedCountInCategory = array[2];
-        this.uncompletedTotalTasksCount = array[3]; // нужно для категории Все
-      });
+    this.totalTasksCountInCategory = this.dataHandler.getTotalCountInCategory(this.selectedCategory);
+    this.completedCountInCategory = this.dataHandler.getCompletedCountInCategory(this.selectedCategory);
+    this.uncompletedCountInCategory = this.dataHandler.getUncompletedCountInCategory(this.selectedCategory);
+    this.uncompletedTotalTasksCount = this.dataHandler.getUncompletedTotalCount();
   }
 
   toggleStat(showStat: boolean): void {

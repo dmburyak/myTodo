@@ -25,7 +25,7 @@ export class SettingsDialogComponent implements OnInit {
 
     ngOnInit() {
         // получаем все значения, чтобы отобразить настроку цветов
-        this.dataHandler.getAllPriorities().subscribe(priorities => this.priorities = priorities);
+      this.priorities = this.dataHandler.getAllPriorities();
     }
 
     // нажали Закрыть

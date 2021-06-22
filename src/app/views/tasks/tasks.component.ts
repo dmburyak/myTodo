@@ -23,9 +23,9 @@ export class TasksComponent implements OnInit {
     @Output()
     deleteTask = new EventEmitter<Task>(); // удаление задачи
     @ViewChild(MatSort, {static: false}) private sort: MatSort;
+
     @Output()
     updateTask = new EventEmitter<Task>(); // обновление задачи
-
     @Output()
     selectCategory = new EventEmitter<Category>(); // нажали на категорию из списка задач
     @Output()

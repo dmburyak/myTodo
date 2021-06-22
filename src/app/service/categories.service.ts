@@ -1,22 +1,28 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
 import { Category } from '../model/Category';
 import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoriesService {
 
-  url = 'assets/mock/categories.json';
+  // url = 'assets/mock/categories.json';
+  url = 'http://localhost:3300/categories';
   allCategories: Category[] = [];
 
   constructor(private http: HttpClient) {
   }
 
-  getAllCategories(): Observable<Category[]> {
-    return this.http.get(this.url) as Observable<Category[]>;
+  getCategoriesFromBack(): Observable<any> {
+    return this.http.get(this.url)
+      .pipe(map(categories => this.allCategories = categories as Category[]));
+  }
+
+  getAllCategories(): Category[] {
+    return this.allCategories;
   }
 
   filterCategories(title: string) {
@@ -26,19 +32,8 @@ export class CategoriesService {
     return this.allCategories;
   }
 
-  search(title: string): Observable<Category[]> {
-
-    if (this.allCategories.length > 0) {
-      return of(this.filterCategories(title));
-    } else {
-      return this.getAllCategories().pipe(
-        map(categories => {
-        this.allCategories = categories as Category[];
-        return this.filterCategories(title);
-      }));
-    }
-
-
+  search(title: string): Category[] {
+    return this.filterCategories(title);
   }
 
 }
