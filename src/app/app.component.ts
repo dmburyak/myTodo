@@ -5,6 +5,11 @@ import { Category } from './model/Category';
 import { Priority } from './model/Priority';
 import { IntroService } from './service/intro.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { switchMap } from 'rxjs/operators';
+import { CategoriesService } from './service/categories.service';
+import { PrioritiesService } from './service/priorities.service';
+import { TasksService } from './service/tasks.service';
+import { zip } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -45,6 +50,9 @@ export class AppComponent implements OnInit {
 
 
   constructor(
+    private categoriesService: CategoriesService,
+    private prioritiesService: PrioritiesService,
+    private tasksService: TasksService,
     private dataHandler: DataHandlerService,
     private introService: IntroService,
     private deviceService: DeviceDetectorService
@@ -61,13 +69,19 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
 
-    this.dataHandler.getDataFromBackend()
-      .subscribe(() => {
-        this.tasks = this.dataHandler.getAllTasks();
-        this.priorities = this.dataHandler.getAllPriorities();
-        this.categories = this.dataHandler.getAllCategories();
-        this.fillCategories();
-      })
+    const getDataFromBackend = zip(
+      this.tasksService.getTasksFromBack(),
+      this.categoriesService.getCategoriesFromBack(),
+      this.prioritiesService.getPrioritiesFromBack()
+    );
+
+    getDataFromBackend.subscribe(data => {
+      this.tasks = data[0];
+      this.categories = data[1];
+      this.priorities = data[2];
+
+      this.fillCategories();
+    })
 
     if (!this.isMobile && !this.isTablet) {
       this.introService.startIntroJS(true);
@@ -76,12 +90,12 @@ export class AppComponent implements OnInit {
   }
 
   onAddCategory(title: string): void {
-    this.dataHandler.addCategory(title)
-      .subscribe(() => {
-          this.onSearchCategory(this.searchCategoryText);
-          this.fillCategories();
-        }
-      );
+    this.categoriesService.addCategory(new Category(title))
+      .pipe(switchMap(data => this.categoriesService.getCategoriesFromBack()))
+      .subscribe(categories => {
+        this.categories = categories;
+        this.onSearchCategory(this.searchCategoryText);
+      })
   }
 
   fillCategories() {
@@ -93,7 +107,7 @@ export class AppComponent implements OnInit {
     this.categories = this.categories.sort((a, b) => a.title.localeCompare(b.title));
 
     this.categories.forEach(cat => {
-        let count = this.dataHandler.getUncompletedCountInCategory(cat);
+        let count = this.tasksService.getUncompletedCountInCategory(cat);
         this.categoryMap.set(cat, count);
       }
     );
@@ -103,12 +117,9 @@ export class AppComponent implements OnInit {
   }
 
   onSearchCategory(title: string): void {
-
     this.searchCategoryText = title;
-
-    this.categories = this.dataHandler.searchCategories(title);
+    this.categories = this.categoriesService.search(title);
     this.fillCategories();
-
   }
 
   onSelectCategory(category: Category | null): void {
@@ -122,13 +133,13 @@ export class AppComponent implements OnInit {
   }
 
   onDeleteCategory(category: Category) {
-    this.dataHandler.deleteCategory(category.id)
-      .subscribe(cat => {
+    this.categoriesService.deleteCategory(category.id)
+      .pipe(switchMap(data => this.categoriesService.getCategoriesFromBack()))
+      .subscribe(categories => {
         this.selectedCategory = null;
-        this.categoryMap.delete(cat);
+        this.categories = categories;
         this.onSearchCategory(this.searchCategoryText);
-        this.updateTasks();
-      });
+      })
   }
 
   onUpdateCategory(category: Category): void {
@@ -235,10 +246,10 @@ export class AppComponent implements OnInit {
 
   updateStat(): void {
 
-    this.totalTasksCountInCategory = this.dataHandler.getTotalCountInCategory(this.selectedCategory);
-    this.completedCountInCategory = this.dataHandler.getCompletedCountInCategory(this.selectedCategory);
-    this.uncompletedCountInCategory = this.dataHandler.getUncompletedCountInCategory(this.selectedCategory);
-    this.uncompletedTotalTasksCount = this.dataHandler.getUncompletedTotalCount();
+    this.totalTasksCountInCategory = this.tasksService.getTotalCountInCategory(this.selectedCategory);
+    this.completedCountInCategory = this.tasksService.getCompletedCountInCategory(this.selectedCategory);
+    this.uncompletedCountInCategory = this.tasksService.getUncompletedCountInCategory(this.selectedCategory);
+    this.uncompletedTotalTasksCount = this.tasksService.getUncompletedCountInCategory(null);
   }
 
   toggleStat(showStat: boolean): void {

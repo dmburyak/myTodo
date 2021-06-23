@@ -28,13 +28,6 @@ export class DataHandlerService {
   ) {
   }
 
-  getDataFromBackend(): Observable<any> {
-    return zip(
-      this.tasksService.getTasksFromBack(),
-      this.categoriesService.getCategoriesFromBack(),
-      this.prioritiesService.getPrioritiesFromBack()
-    );
-  }
 
   getAllTasks(): Task[] {
     return this.tasksService.getAllTasks();
@@ -55,7 +48,7 @@ export class DataHandlerService {
   searchTasks(category: Category | null, searchText: string, status: boolean, priority: Priority): Task[] {
     return this.tasksService.search(category, searchText, status, priority);
   }
-
+/*
   getCompletedCountInCategory(category: Category | null): number {
     return this.tasksService.getCompletedCountInCategory(category);
   }
@@ -71,14 +64,24 @@ export class DataHandlerService {
   getTotalCountInCategory(category: Category | null): number {
     return this.tasksService.getTotalCountInCategory(category);
   }
-
+*/
 // getTotalCount(): Observable<number> {
 //   return this.taskDaoArray.getTotalCount();
 // }
 
-  addCategory(title: string): Observable<Category> {
-    return this.categoryDaoArray.add(new Category(null, title));
+  // addCategory(title: string): Observable<Category> {
+  //   return this.categoryDaoArray.add(new Category(null, title));
+  // }
+
+  /*
+  getCategoriesFromBackend(): Observable<any> {
+  return this.categoriesService.getCategoriesFromBack();
   }
+
+  addCategory(title: string): Observable<any> {
+    return this.categoriesService.addCategory(new Category(title));
+    }
+*/
 
   getAllCategories(): Category[] {
     return this.categoriesService.getAllCategories();
@@ -92,8 +95,8 @@ export class DataHandlerService {
     return this.categoryDaoArray.update(category);
   }
 
-  deleteCategory(id: number | null): Observable<Category> {
-    return this.categoryDaoArray.delete(id);
+  deleteCategory(id: number): Observable<any> {
+    return this.categoriesService.deleteCategory(id);
   }
 
 

@@ -36,4 +36,12 @@ export class CategoriesService {
     return this.filterCategories(title);
   }
 
+  addCategory(category: Category) {
+    return this.http.post(this.url, category);
+  }
+
+  deleteCategory(id: number): Observable<any> {
+    return this.http.delete(`${this.url}/${id}/delete`);
+  }
+
 }

@@ -7,6 +7,8 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
 import { OperType } from '../OperType';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { CategoriesService } from '../../service/categories.service';
+import { PrioritiesService } from '../../service/priorities.service';
 
 @Component({
   selector: 'app-edit-task-dialog',
@@ -39,7 +41,9 @@ export class EditTaskDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) private data: [Task, string, OperType], // данные, которые передали в диалоговое окно
     private dataHandler: DataHandlerService, // ссылка на сервис для работы с данными
     private dialog: MatDialog, // для открытия нового диалогового окна (из текущего) - например для подтверждения удаления
-    private deviceService: DeviceDetectorService // для определения типа устройства
+    private deviceService: DeviceDetectorService, // для определения типа устройства
+  private categoriesService: CategoriesService,
+  private prioritiesService: PrioritiesService,
 
   ) {
 
@@ -58,9 +62,8 @@ export class EditTaskDialogComponent implements OnInit {
     this.tmpCategory = this.task.category;
     this.tmpDate = this.task.date;
 
-
-    this.categories = this.dataHandler.getAllCategories();
-    this.categories = this.dataHandler.getAllPriorities();
+    this.categories = this.categoriesService.getAllCategories();
+    this.categories = this.prioritiesService.getAllPriorities();
 
   }
 
