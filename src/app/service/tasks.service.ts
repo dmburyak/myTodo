@@ -79,4 +79,16 @@ export class TasksService {
     return this.search(category, null, null, null).length;
   }
 
+  addTask(task: Task) {
+    return this.http.post(this.url, task);
+  }
+
+  deleteTask(id: number): Observable<any> {
+    return this.http.delete(`${this.url}/${id}/delete`);
+  }
+
+  updateTask(id: number, task: Task): Observable<any> {
+    return this.http.patch(`${this.url}/${id}/update`, task);
+  }
+
 }

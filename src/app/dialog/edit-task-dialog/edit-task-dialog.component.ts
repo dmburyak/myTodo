@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Task } from '../../model/Task';
 import { Priority } from '../../model/Priority';
 import { Category } from '../../model/Category';
-import { DataHandlerService } from '../../service/data-handler.service';
+// import { DataHandlerService } from '../../service/data-handler.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { OperType } from '../OperType';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -39,12 +39,11 @@ export class EditTaskDialogComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<EditTaskDialogComponent>, // // для возможности работы с текущим диалог. окном
     @Inject(MAT_DIALOG_DATA) private data: [Task, string, OperType], // данные, которые передали в диалоговое окно
-    private dataHandler: DataHandlerService, // ссылка на сервис для работы с данными
+ //   private dataHandler: DataHandlerService, // ссылка на сервис для работы с данными
     private dialog: MatDialog, // для открытия нового диалогового окна (из текущего) - например для подтверждения удаления
     private deviceService: DeviceDetectorService, // для определения типа устройства
-  private categoriesService: CategoriesService,
-  private prioritiesService: PrioritiesService,
-
+    private categoriesService: CategoriesService,
+    private prioritiesService: PrioritiesService,
   ) {
 
     this.isMobile = deviceService.isMobile();
@@ -63,7 +62,7 @@ export class EditTaskDialogComponent implements OnInit {
     this.tmpDate = this.task.date;
 
     this.categories = this.categoriesService.getAllCategories();
-    this.categories = this.prioritiesService.getAllPriorities();
+    this.priorities = this.prioritiesService.getAllPriorities();
 
   }
 

@@ -26,4 +26,16 @@ export class PrioritiesService {
       return this.allPriorities;
   }
 
+  addPriority(priority: Priority) {
+    return this.http.post(this.url, priority);
+  }
+
+  deletePriority(id: number): Observable<any> {
+    return this.http.delete(`${this.url}/${id}/delete`);
+  }
+
+  updatePriority(id: number, priority: Priority): Observable<any> {
+    return this.http.patch(`${this.url}/${id}/update`, priority);
+  }
+
 }

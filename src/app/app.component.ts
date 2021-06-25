@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { DataHandlerService } from './service/data-handler.service';
 import { Task } from './model/Task';
 import { Category } from './model/Category';
 import { Priority } from './model/Priority';
 import { IntroService } from './service/intro.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import { switchMap } from 'rxjs/operators';
+import { concatMap, map, switchMap } from 'rxjs/operators';
 import { CategoriesService } from './service/categories.service';
 import { PrioritiesService } from './service/priorities.service';
 import { TasksService } from './service/tasks.service';
-import { zip } from 'rxjs';
+import { of, zip } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -53,7 +52,7 @@ export class AppComponent implements OnInit {
     private categoriesService: CategoriesService,
     private prioritiesService: PrioritiesService,
     private tasksService: TasksService,
-    private dataHandler: DataHandlerService,
+   // private dataHandler: DataHandlerService,
     private introService: IntroService,
     private deviceService: DeviceDetectorService
   ) {
@@ -86,6 +85,7 @@ export class AppComponent implements OnInit {
     if (!this.isMobile && !this.isTablet) {
       this.introService.startIntroJS(true);
     }
+
 
   }
 
@@ -143,48 +143,34 @@ export class AppComponent implements OnInit {
   }
 
   onUpdateCategory(category: Category): void {
-    this.dataHandler.updateCategory(category)
-      .subscribe(() => {
+    this.categoriesService.updateCategory(category.id, category)
+      .pipe(switchMap(data => this.categoriesService.getCategoriesFromBack()))
+      .subscribe(categories => {
+        this.categories = categories;
         this.onSearchCategory(this.searchCategoryText);
-      });
+      })
   }
 
   onUpdateTask(task: Task): void {
 
-    this.dataHandler.updateTask(task).subscribe(() => {
-      this.fillCategories();
-      this.updateTasksAndStat();
+    this.tasksService.updateTask(task.id, task)
+      .pipe(switchMap(data => this.tasksService.getTasksFromBack()))
+      .subscribe(tasks => {
+        this.updateTasks();
+        this.fillCategories();
     });
 
   }
 
   onDeleteTask(task: Task) {
-    /*
-        this.dataHandler.deleteTask(task.id)
-          .pipe(
-            concatMap(task => {
-                if (!task.category) {
-                  return of(({t: task, count: 0}));
-                }
-                return this.dataHandler.getUncompletedCountInCategory(task.category)
-                  .pipe(map(count => {
-                    return ({t: task, count});
-                  }))
-              }
-            ))
-          .subscribe(result => {
 
-            const t = result.t as Task;
-            if (t.category) {
-              this.categoryMap.set(t.category, result.count);
-            }
-
-            this.updateTasksAndStat();
-
-          });
-    */
-
-  }
+    this.tasksService.deleteTask(task.id)
+      .pipe(switchMap(data => this.tasksService.getTasksFromBack()))
+      .subscribe(tasks => {
+        this.updateTasks();
+        this.fillCategories();
+      });
+    }
 
   onSearchTasks(searchString: string): void {
     this.searchTaskText = searchString;
@@ -202,7 +188,7 @@ export class AppComponent implements OnInit {
   }
 
   updateTasks(): void {
-    this.tasks = this.dataHandler.searchTasks(
+    this.tasks = this.tasksService.search(
       this.selectedCategory,
       this.searchTaskText,
       this.statusFilter,
@@ -211,30 +197,12 @@ export class AppComponent implements OnInit {
   }
 
   onAddTask(task: Task) {
-    /*
-        this.dataHandler.addTask(task).pipe(
-          concatMap(task => {
-              if (!task.category) {
-                return of(({t: task, count: 0}));
-              }
-              return this.dataHandler.getUncompletedCountInCategory(task.category)
-                .pipe(map(count => {
-                  return ({t: task, count});
-                }));
-            }
-          ))
-          .subscribe(result => {
-
-            const t = result.t as Task;
-
-            if (t.category) {
-              this.categoryMap.set(t.category, result.count);
-            }
-
-            this.updateTasksAndStat();
-
-          });
-    */
+    this.tasksService.addTask(task)
+      .pipe(switchMap(() => this.tasksService.getTasksFromBack()))
+      .subscribe(() => {
+        this.updateTasks();
+        this.fillCategories();
+      })
   }
 
   updateTasksAndStat(): void {
@@ -273,7 +241,6 @@ export class AppComponent implements OnInit {
       this.menuMode = 'push';
       this.showBackdrop = false;
     }
-
 
   }
 

@@ -44,4 +44,8 @@ export class CategoriesService {
     return this.http.delete(`${this.url}/${id}/delete`);
   }
 
+  updateCategory(id: number, category: Category): Observable<any> {
+    return this.http.patch(`${this.url}/${id}/update`, category);
+  }
+
 }
